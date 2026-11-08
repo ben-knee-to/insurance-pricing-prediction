@@ -1,0 +1,31 @@
+{
+  "rows": 1338,
+  "columns": 7,
+  "missing_values": {
+    "age": 0,
+    "sex": 0,
+    "bmi": 0,
+    "children": 0,
+    "smoker": 0,
+    "region": 0,
+    "charges": 0
+  },
+  "duplicate_rows": 1,
+  "dtypes": {
+    "age": "int64",
+    "sex": "object",
+    "bmi": "float64",
+    "children": "int64",
+    "smoker": "object",
+    "region": "object",
+    "charges": "float64"
+  },
+  "charges_mean": 13270.422265141257,
+  "charges_median": 9382.033,
+  "charges_min": 1121.8739,
+  "charges_max": 63770.42801,
+  "smoker_counts": {
+    "no": 1064,
+    "yes": 274
+  }
+}
