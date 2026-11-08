@@ -1,0 +1,19 @@
+{
+  "rows": 1337,
+  "duplicate_rows": 0,
+  "missing_cells": 0,
+  "mean_charges_usd": 13279.12,
+  "median_charges_usd": 9386.16,
+  "min_charges_usd": 1121.87,
+  "max_charges_usd": 63770.43,
+  "smoker_count": 274,
+  "non_smoker_count": 1063,
+  "smoker_mean_charges_usd": 32050.23,
+  "non_smoker_mean_charges_usd": 8440.66,
+  "smoker_to_non_smoker_mean_ratio": 3.797,
+  "pearson_age_charges": 0.2983,
+  "pearson_bmi_charges": 0.1984,
+  "pearson_children_charges": 0.0674,
+  "charge_skewness": 1.515,
+  "charge_95th_percentile_usd": 41210.05
+}

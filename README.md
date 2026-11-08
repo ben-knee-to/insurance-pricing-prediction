@@ -41,3 +41,10 @@ Produces `data/processed/insurance_clean.csv`, `reports/cleaning_report.json`, a
 `reports/invalid_rows.csv`. Cleaning normalizes categories, removes exact duplicates,
 and audits invalid rows. High-but-valid BMI and charges are retained. Never fit scalers,
 imputers, or encoders on the complete dataset before the train/test split.
+
+## Step 3 — Exploratory data analysis
+```powershell
+python src/eda.py
+python -m pytest -q
+```
+Outputs: `reports/eda/eda_summary.json`, grouped charge summaries, Pearson and Spearman correlations, and nine PNG charts in `reports/eda/figures/`. This is descriptive observational analysis, not causal inference. Smoker comparisons are unadjusted. The dataset is not a real-world actuarial pricing benchmark.
