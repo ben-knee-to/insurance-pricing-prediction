@@ -48,3 +48,13 @@ python src/eda.py
 python -m pytest -q
 ```
 Outputs: `reports/eda/eda_summary.json`, grouped charge summaries, Pearson and Spearman correlations, and nine PNG charts in `reports/eda/figures/`. This is descriptive observational analysis, not causal inference. Smoker comparisons are unadjusted. The dataset is not a real-world actuarial pricing benchmark.
+
+## Expanded Step 3 — Advanced EDA
+
+Run `python src/advanced_eda.py` after `python src/clean_data.py` and `python src/eda.py`.
+Outputs in `reports/eda/advanced/` include Lorenz/Pareto curves, Gini coefficient,
+smoking × BMI and smoking × age segment comparisons, subgroup correlations,
+high-charge customer profiles, six new figures and JSON/CSV reports.
+These are descriptive associations, not causal effects or predictive explanations.
+SHAP will be calculated after fitting models using a leakage-safe train/test split.
+Run tests with `python -m pytest -q`.

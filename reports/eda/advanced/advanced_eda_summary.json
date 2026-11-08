@@ -1,0 +1,23 @@
+{
+  "rows": 1337,
+  "cost_concentration": {
+    "top_1pct_share": 0.04202008133066845,
+    "top_1pct_count": 14,
+    "top_5pct_share": 0.17580160164867395,
+    "top_5pct_count": 67,
+    "top_10pct_share": 0.31985381476376623,
+    "top_10pct_count": 134,
+    "top_20pct_share": 0.5169032486082393,
+    "top_20pct_count": 268,
+    "gini_coefficient": 0.462857887194447,
+    "total_charges_usd": 17754185.427659
+  },
+  "observed_top_decile_threshold_usd": 34832.7416,
+  "top_decile_observed_count": 134,
+  "notes": [
+    "Full-sample exploratory summaries only; no predictive models fitted.",
+    "SHAP requires a fitted model and will be performed in Step 7.",
+    "Charges are medical charges, not premiums or insurer claims.",
+    "Differences are observational, not causal."
+  ]
+}
