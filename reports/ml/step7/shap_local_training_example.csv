@@ -1,0 +1,12 @@
+feature,contribution_usd
+numeric__age,-4325.208636753608
+numeric__bmi,842.6961843975598
+numeric__children,1285.7951771456114
+categorical__sex_female,-94.91910404792209
+categorical__sex_male,-78.15265764870618
+categorical__smoker_no,-2427.3888804095595
+categorical__smoker_yes,-3274.988698686366
+categorical__region_northeast,-198.9996164239081
+categorical__region_northwest,-198.4418280062556
+categorical__region_southeast,-7.276516100404299
+categorical__region_southwest,-347.85050519699735

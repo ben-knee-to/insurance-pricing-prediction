@@ -1,0 +1,12 @@
+{
+  "model_frozen": true,
+  "train_rows": 1069,
+  "holdout_rows": 268,
+  "training_permutation_importance": true,
+  "shap_status": "completed",
+  "shap_global_file": "shap_global_importance.csv",
+  "oof_absolute_error_90th_percentile_usd": 5360.924421469788,
+  "holdout_mae_usd": 2115.317295857821,
+  "interval_warning": "Illustrative symmetric band based on OOF absolute errors, not calibrated conditional coverage. Do not use as clinical or underwriting guidance.",
+  "holdout_warning": "Holdout already evaluated in Step 6; diagnostics only. Do not select or tune models based on these results."
+}

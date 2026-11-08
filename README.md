@@ -88,3 +88,10 @@ Medical charges are not insurance premiums. Do not use this demonstration model 
 Run `python src/tune_models.py` from the repository root. It performs five-fold training-only grid searches over Random Forest and Gradient Boosting with and without smoking interaction features, chooses the configuration with lowest cross-validated MAE, then evaluates the selected fitted pipeline once on the holdout set. Outputs are saved in `reports/ml/step6/` and the full fitted pipeline in `models/final_insurance_model.joblib`.
 
 Selected: Random Forest, base features, 150 trees, max_features=0.7, min_samples_leaf=4. CV MAE: $2,728.77. Holdout MAE: $2,116.69, RMSE: $3,516.07, R²: 0.9142. This is a public synthetic/educational-style dataset, not a production pricing study. Earlier exploratory analyses inspected the entire dataset, so the holdout is not fully blinded in a strict research sense. Do not tune again against this holdout. In Step 7, explain the frozen model without modifying it.
+
+
+## Step 7 — Explainability and error diagnostics
+
+Run `python src/explain_model.py` after Step 6, then `python -m pytest -q`. The frozen Random Forest is not retrained. Permutation importance uses training rows; SHAP explains a 60-row training sample in the transformed feature space. Holdout segment and residual diagnostics are descriptive only, not for model selection. The empirical OOF error band is illustrative, not a calibrated prediction interval.
+
+Reports are written to `reports/ml/step7/`. These predictions are estimates of US medical charges, **not insurance premiums**, medical advice, or real-world underwriting recommendations. Prior full-data EDA limits claims of a fully blinded test.

@@ -1,0 +1,12 @@
+transformed_feature,mean_absolute_shap_usd
+categorical__smoker_yes,3851.9433880341894
+numeric__age,3314.575936365715
+categorical__smoker_no,2862.0722196778866
+numeric__bmi,1767.197185613498
+numeric__children,824.6914559756076
+categorical__region_northeast,228.3487770753398
+categorical__sex_male,104.96410305364343
+categorical__sex_female,98.55721263981906
+categorical__region_southwest,96.92685609233644
+categorical__region_northwest,76.69356098430534
+categorical__region_southeast,54.93498028700001
