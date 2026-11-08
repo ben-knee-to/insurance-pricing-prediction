@@ -58,3 +58,15 @@ high-charge customer profiles, six new figures and JSON/CSV reports.
 These are descriptive associations, not causal effects or predictive explanations.
 SHAP will be calculated after fitting models using a leakage-safe train/test split.
 Run tests with `python -m pytest -q`.
+
+## Step 4 — Leakage-safe feature preparation
+
+Run `python src/prepare_features.py` after Steps 1–3, then `python -m pytest -q`.
+This creates `data/processed/ml/train.csv`, `test.csv`, `split_manifest.json`, and
+`models/preprocessor_base.joblib` and `models/preprocessor_interactions.joblib`.
+The split is fixed (random seed 42), 80/20, stratified on smoking status.
+Preprocessing is fitted **only on training rows**; the holdout is not used to
+choose models, features, or hyperparameters. `source_row_id` is an audit key,
+not a model input. The fitted preprocessors are exploration artifacts; Step 5
+should fit a complete model pipeline on training data (and within each CV fold)
+to avoid validation-fold leakage. Never load untrusted joblib artifacts.
