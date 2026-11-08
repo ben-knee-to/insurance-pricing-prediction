@@ -1,0 +1,9 @@
+{
+  "selected_model": "gradient_boosting",
+  "feature_set": "interactions",
+  "selection_metric": "lowest mean 5-fold CV MAE",
+  "train_rows": 1069,
+  "holdout_test_used": false,
+  "cv_seed": 42,
+  "caution": "Exploratory CV winner; final tuning and holdout evaluation remain in Step 6."
+}

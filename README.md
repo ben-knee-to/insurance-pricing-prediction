@@ -70,3 +70,15 @@ choose models, features, or hyperparameters. `source_row_id` is an audit key,
 not a model input. The fitted preprocessors are exploration artifacts; Step 5
 should fit a complete model pipeline on training data (and within each CV fold)
 to avoid validation-fold leakage. Never load untrusted joblib artifacts.
+
+## Step 5 — Baseline model development
+
+Run `python src/prepare_features.py` first, then `python src/train_models.py`.
+This compares six regression algorithms with and without engineered smoking interactions using
+five-fold training-only cross-validation. It saves results under `reports/ml/` and the selected
+full pipeline to `models/best_baseline_model.joblib`. **The holdout `test.csv` is never opened
+by the training script.** Selection is based on the lowest mean cross-validation MAE;
+Step 6 will tune candidates and perform a single final holdout evaluation.
+
+Metrics: MAE and RMSE in USD, R² unitless. Segment errors use out-of-fold predictions.
+Medical charges are not insurance premiums. Do not use this demonstration model for underwriting.
