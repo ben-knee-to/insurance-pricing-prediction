@@ -1,0 +1,5 @@
+model,features,cv_mae,best_params
+random_forest,base,2729.1606794602276,"{""regressor__max_features"": 0.7, ""regressor__min_samples_leaf"": 4, ""regressor__n_estimators"": 150}"
+gradient_boosting,interactions,2743.411535336557,"{""regressor__learning_rate"": 0.05, ""regressor__max_depth"": 2, ""regressor__min_samples_leaf"": 3, ""regressor__n_estimators"": 200}"
+gradient_boosting,base,2746.2818543139247,"{""regressor__learning_rate"": 0.05, ""regressor__max_depth"": 3, ""regressor__min_samples_leaf"": 3, ""regressor__n_estimators"": 100}"
+random_forest,interactions,2764.4649194050776,"{""regressor__max_features"": 0.7, ""regressor__min_samples_leaf"": 4, ""regressor__n_estimators"": 150}"

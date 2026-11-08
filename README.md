@@ -82,3 +82,9 @@ Step 6 will tune candidates and perform a single final holdout evaluation.
 
 Metrics: MAE and RMSE in USD, R² unitless. Segment errors use out-of-fold predictions.
 Medical charges are not insurance premiums. Do not use this demonstration model for underwriting.
+
+## Step 6 — Model tuning and final holdout evaluation
+
+Run `python src/tune_models.py` from the repository root. It performs five-fold training-only grid searches over Random Forest and Gradient Boosting with and without smoking interaction features, chooses the configuration with lowest cross-validated MAE, then evaluates the selected fitted pipeline once on the holdout set. Outputs are saved in `reports/ml/step6/` and the full fitted pipeline in `models/final_insurance_model.joblib`.
+
+Selected: Random Forest, base features, 150 trees, max_features=0.7, min_samples_leaf=4. CV MAE: $2,728.77. Holdout MAE: $2,116.69, RMSE: $3,516.07, R²: 0.9142. This is a public synthetic/educational-style dataset, not a production pricing study. Earlier exploratory analyses inspected the entire dataset, so the holdout is not fully blinded in a strict research sense. Do not tune again against this holdout. In Step 7, explain the frozen model without modifying it.
