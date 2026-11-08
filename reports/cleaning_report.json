@@ -1,0 +1,37 @@
+{
+  "input_rows": 1338,
+  "duplicates_removed": 1,
+  "invalid_rows_excluded": 0,
+  "clean_rows": 1337,
+  "missing_values_after_cleaning": {
+    "age": 0,
+    "sex": 0,
+    "bmi": 0,
+    "children": 0,
+    "smoker": 0,
+    "region": 0,
+    "charges": 0
+  },
+  "categories": {
+    "sex": [
+      "female",
+      "male"
+    ],
+    "smoker": [
+      "no",
+      "yes"
+    ],
+    "region": [
+      "northeast",
+      "northwest",
+      "southeast",
+      "southwest"
+    ]
+  },
+  "charges_summary_usd": {
+    "min": 1121.8739,
+    "median": 9386.1613,
+    "max": 63770.42801
+  },
+  "note": "Extreme but valid values retained. Invalid rows excluded and audited, never silently imputed."
+}

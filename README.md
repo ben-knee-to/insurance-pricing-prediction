@@ -31,3 +31,13 @@ python src/profile_data.py
 
 ## Notes
 Dataset is a common public demonstration dataset. Verify original source/license before redistributing. This model is educational and not appropriate for real insurance underwriting or pricing decisions.
+
+## Step 2 — Cleaning and validation
+```powershell
+python src/clean_data.py
+python -m pytest -q
+```
+Produces `data/processed/insurance_clean.csv`, `reports/cleaning_report.json`, and
+`reports/invalid_rows.csv`. Cleaning normalizes categories, removes exact duplicates,
+and audits invalid rows. High-but-valid BMI and charges are retained. Never fit scalers,
+imputers, or encoders on the complete dataset before the train/test split.
