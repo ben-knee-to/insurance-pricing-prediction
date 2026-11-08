@@ -1,97 +1,68 @@
-# Insurance Pricing Prediction & Analytics
+# Insurance Charge Prediction & Analytics
 
-End-to-end Python data science portfolio project predicting medical insurance charges from demographic and lifestyle features.
+End-to-end **Python / Scikit-learn / Streamlit** portfolio project using a 1,338-row US medical charges dataset (1,337 after removing one exact duplicate). Includes cleaning, EDA, customer segments, charge concentration, cross-validated regression, hyperparameter tuning, model explainability and a six-tab Streamlit dashboard.
 
-## Dataset
-`data/raw/insurance.csv` contains 1,338 rows and 7 columns. Target: `charges` (USD). These are medical charges, not verified insurance premiums.
+## Results
 
-## Setup (Windows PowerShell)
+| Metric | Frozen holdout result (268 observations) |
+|---|---:|
+| MAE | $2,116.69 |
+| RMSE | $3,516.07 |
+| R² | 0.9142 |
+
+Selected model: Random Forest with 150 trees, `max_features=0.7`, `min_samples_leaf=4`, chosen on training-only five-fold CV (MAE $2,728.77). The final holdout was evaluated once. Earlier exploratory analysis examined the full dataset, so this is not a strictly blinded research benchmark.
+
+**Data insights:** top 10% of observations account for approximately 31.99% of total charges; top 20% account for 51.69%. Smoking status, age and BMI were prominent predictive factors. These are associations, not causal findings.
+
+## Quick start (Windows / PyCharm)
+
 ```powershell
 py -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
+python -m pytest -q
+streamlit run app.py
+```
+
+The downloadable archive includes a locally trained model under `models/final_insurance_model.joblib`. If the model is absent, regenerate the frozen pipeline with `python src/tune_models.py`. **Only load model files you generated or trust:** joblib uses pickle deserialization. Keep `src/prepare_features.py` available for custom pipeline class loading.
+
+## Reproduce the pipeline
+
+```powershell
 python src/profile_data.py
-```
-
-## Step 1 outputs
-- `reports/profile_summary.json`
-- `reports/descriptive_statistics.csv`
-- `reports/column_profile.csv`
-
-## Roadmap
-1. Profiling and GitHub setup
-2. Cleaning and validation
-3. EDA
-4. Feature engineering
-5. Baseline models
-6. Model tuning
-7. Explainability
-8. Streamlit application
-9. Deployment and documentation
-
-## Notes
-Dataset is a common public demonstration dataset. Verify original source/license before redistributing. This model is educational and not appropriate for real insurance underwriting or pricing decisions.
-
-## Step 2 — Cleaning and validation
-```powershell
 python src/clean_data.py
-python -m pytest -q
-```
-Produces `data/processed/insurance_clean.csv`, `reports/cleaning_report.json`, and
-`reports/invalid_rows.csv`. Cleaning normalizes categories, removes exact duplicates,
-and audits invalid rows. High-but-valid BMI and charges are retained. Never fit scalers,
-imputers, or encoders on the complete dataset before the train/test split.
-
-## Step 3 — Exploratory data analysis
-```powershell
 python src/eda.py
-python -m pytest -q
+python src/advanced_eda.py
+python src/prepare_features.py
+python src/train_models.py
+python src/tune_models.py
+python src/explain_model.py
+streamlit run app.py
 ```
-Outputs: `reports/eda/eda_summary.json`, grouped charge summaries, Pearson and Spearman correlations, and nine PNG charts in `reports/eda/figures/`. This is descriptive observational analysis, not causal inference. Smoker comparisons are unadjusted. The dataset is not a real-world actuarial pricing benchmark.
 
-## Expanded Step 3 — Advanced EDA
+**Important:** Running `tune_models.py` again is for reproduction, not further test-set-driven model selection. Do not tune based on final holdout performance.
 
-Run `python src/advanced_eda.py` after `python src/clean_data.py` and `python src/eda.py`.
-Outputs in `reports/eda/advanced/` include Lorenz/Pareto curves, Gini coefficient,
-smoking × BMI and smoking × age segment comparisons, subgroup correlations,
-high-charge customer profiles, six new figures and JSON/CSV reports.
-These are descriptive associations, not causal effects or predictive explanations.
-SHAP will be calculated after fitting models using a leakage-safe train/test split.
-Run tests with `python -m pytest -q`.
+## Application pages
 
-## Step 4 — Leakage-safe feature preparation
+- Overview: dataset KPIs and charge distributions
+- Customer analytics: smoking, age, BMI and demographic comparisons
+- Cost concentration: Lorenz curve, top-decile shares and Gini coefficient
+- Predict charges: validated form using the frozen trained pipeline
+- Model performance: frozen holdout metrics and diagnostics
+- Explainability: global permutation importance, SHAP and training-example contributions
 
-Run `python src/prepare_features.py` after Steps 1–3, then `python -m pytest -q`.
-This creates `data/processed/ml/train.csv`, `test.csv`, `split_manifest.json`, and
-`models/preprocessor_base.joblib` and `models/preprocessor_interactions.joblib`.
-The split is fixed (random seed 42), 80/20, stratified on smoking status.
-Preprocessing is fitted **only on training rows**; the holdout is not used to
-choose models, features, or hyperparameters. `source_row_id` is an audit key,
-not a model input. The fitted preprocessors are exploration artifacts; Step 5
-should fit a complete model pipeline on training data (and within each CV fold)
-to avoid validation-fold leakage. Never load untrusted joblib artifacts.
+## Repository layout
 
-## Step 5 — Baseline model development
+`app.py` is the dashboard entry point. `src/` contains the pipeline scripts and `app_utils.py`; `tests/` contains validation checks; `data/raw/` and `data/processed/` hold CSV data; `reports/` holds charts, CSV and JSON results; `models/` contains locally generated joblib artifacts (ignored by Git).
 
-Run `python src/prepare_features.py` first, then `python src/train_models.py`.
-This compares six regression algorithms with and without engineered smoking interactions using
-five-fold training-only cross-validation. It saves results under `reports/ml/` and the selected
-full pipeline to `models/best_baseline_model.joblib`. **The holdout `test.csv` is never opened
-by the training script.** Selection is based on the lowest mean cross-validation MAE;
-Step 6 will tune candidates and perform a single final holdout evaluation.
+## Deployment
 
-Metrics: MAE and RMSE in USD, R² unitless. Segment errors use out-of-fold predictions.
-Medical charges are not insurance premiums. Do not use this demonstration model for underwriting.
+For local deployment, run `streamlit run app.py`. For Streamlit Community Cloud, push the repository, select `app.py`, and ensure the model artifact is provided by a **trusted** deployment build process (it is ignored by Git). Without the model, the predictor displays a clear missing-model warning; the analytics tabs still work. Review dataset redistribution permissions before publishing the CSV.
 
-## Step 6 — Model tuning and final holdout evaluation
+## Limitations and responsible use
 
-Run `python src/tune_models.py` from the repository root. It performs five-fold training-only grid searches over Random Forest and Gradient Boosting with and without smoking interaction features, chooses the configuration with lowest cross-validated MAE, then evaluates the selected fitted pipeline once on the holdout set. Outputs are saved in `reports/ml/step6/` and the full fitted pipeline in `models/final_insurance_model.joblib`.
+This dataset represents US **medical charges**, not actual policy premiums, insurer claims, customer retention, or South African pricing. It is a small observational dataset with limited covariates and unknown collection representativeness. Results should not be used for medical advice, underwriting or insurance decisions. SHAP and feature importance do not establish causation. Model error and fairness may differ across groups. No calibrated prediction intervals are claimed.
 
-Selected: Random Forest, base features, 150 trees, max_features=0.7, min_samples_leaf=4. CV MAE: $2,728.77. Holdout MAE: $2,116.69, RMSE: $3,516.07, R²: 0.9142. This is a public synthetic/educational-style dataset, not a production pricing study. Earlier exploratory analyses inspected the entire dataset, so the holdout is not fully blinded in a strict research sense. Do not tune again against this holdout. In Step 7, explain the frozen model without modifying it.
+## Portfolio summary
 
-
-## Step 7 — Explainability and error diagnostics
-
-Run `python src/explain_model.py` after Step 6, then `python -m pytest -q`. The frozen Random Forest is not retrained. Permutation importance uses training rows; SHAP explains a 60-row training sample in the transformed feature space. Holdout segment and residual diagnostics are descriptive only, not for model selection. The empirical OOF error band is illustrative, not a calibrated prediction interval.
-
-Reports are written to `reports/ml/step7/`. These predictions are estimates of US medical charges, **not insurance premiums**, medical advice, or real-world underwriting recommendations. Prior full-data EDA limits claims of a fully blinded test.
+Built an end-to-end medical charge analytics and regression application on 1,337 cleaned observations, combining exploratory segmentation, cost concentration, leakage-aware model selection, a tuned Random Forest (holdout R² 0.914; MAE $2,117), SHAP explanations, automated tests and a six-tab Streamlit dashboard.
